@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+
+# env files
+.env
+
+# logs
+logs/
+*.log
+npm-debug.log*
+
+# runtime
+pids/
+*.pid
+*.seed
+
+# coverage
+coverage/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
