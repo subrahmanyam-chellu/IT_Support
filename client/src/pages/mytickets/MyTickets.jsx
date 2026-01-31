@@ -8,11 +8,14 @@ import { useNavigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
 import Typography from '@mui/material/Typography'
 import axios from 'axios';
+import CircularIndeterminate from '/src/components/CircularIndeterminate';
+
 const MyTickets = () => {
     const navigate = useNavigate();
     const [users, setUsers] = useState({});
     const [tickets, setTickets] = useState([]);
-    const [error, setError] = useState("");
+    const [error, setError] = useState();
+    const [loading, setLoading] = useState(false);
     const token = localStorage.getItem("x-token");
 
     useEffect(() => {
@@ -31,6 +34,7 @@ const MyTickets = () => {
     }, [navigate]);
 
     const ticketsHandler = async()=>{
+        setLoading(true);
         try{
              const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/gettickets`,
                                               { 
@@ -43,17 +47,22 @@ const MyTickets = () => {
                 }
                 setTickets(response.data.tickets);
              }
+             else{
+                setError("no data found");
+             }
         }catch(error){
             if(error){
-                setError(error);
+                setError(error.toString());
             }
             else{
                 setError("we are facing some  error");
             }
         }
+        setLoading(false);
     }
     return (
         <MainLayout>
+            {loading&&<CircularIndeterminate texts={"Loading tickets..."}/>}
             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent:'space-between', height: '100vh', mt: { xs: '65px' } }}>
                 <Typography variant='h4' color='success'> Yours tickets....</Typography>
                 <Tickets tickets={tickets} />

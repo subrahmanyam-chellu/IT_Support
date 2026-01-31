@@ -15,13 +15,15 @@ import { useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode'
 import TextField from '@mui/material/TextField'
 import Divider from '@mui/material/Divider'
+import CircularIndeterminate from '/src/components/CircularIndeterminate'
 
 const AllTickets = () => {
     const navigate = useNavigate();
     const [users, setUsers] = useState();
     const [error, setError] = useState('');
     const [tickets, setTickets] = useState([]);
-    const [counts, setCounts] = useState({})
+    const [counts, setCounts] = useState({});
+    const [loading, setLoading] = useState([false, '']);
     const token = localStorage.getItem("x-token");
     useEffect(() => {
         if (!token) {
@@ -40,6 +42,7 @@ const AllTickets = () => {
     }, [navigate, TicketsA]);
 
     const ticketsHandler = async () => {
+        setLoading([true, 'Loading tickets...']);
         try {
             const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/alltickets`,
                 {
@@ -60,9 +63,11 @@ const AllTickets = () => {
                 setError("we are facing some  error");
             }
         }
+        setLoading([false, 'Loading tickets...']);
     }
 
     const countsHandler = async () => {
+        setLoading([true, 'Loading counts...']);
         try {
             const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/counts`,
                 {
@@ -83,9 +88,11 @@ const AllTickets = () => {
                 setError("we are facing some  error");
             }
         }
+        setLoading([false, 'Loading tickets...']);
     }
 
     const handleDeleteAll = async () => {
+            setLoading([true, 'Deleting all tickets...']);
         try {
             if (confirm("are you wana delete all resolved tickets ?")) {
                 const response = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/deleteall`,
@@ -101,9 +108,11 @@ const AllTickets = () => {
         } catch (err) {
             alert("deletion is failed");
         }
+        setLoading([true, 'Loading tickets...']);
     }
 
     const handleDelete = async (e) => {
+        setLoading([true, 'Deleting ticket...']);
         e.preventDefault();
         const formData = new FormData(e.target);
         const ticketId = formData.get("ticketId");
@@ -123,10 +132,12 @@ const AllTickets = () => {
         } catch (err) {
             alert("deletion is failed");
         }
+        setLoading([true, 'Loading tickets...']);
     }
 
     return (
         <MainLayout>
+            {loading[0]&&<CircularIndeterminate texts={loading[1]}/>}
             <Box sx={{ display: 'flex', flexDirection: 'column', mt: { xs: '65px' } }}>
                 <Box sx={{ display: 'flex', flexDirection:{xs:'column', md:'row'}, justifyContent: 'space-around', backgroundColor: '#a5aa90', mb: { xs: '25px' }, paddingY: { xs: '25px' } }}>
                     <Card>
@@ -165,7 +176,7 @@ const AllTickets = () => {
                     <Box sx={{ maxWidth: '800px' }}>
                         <TextField label='TicketId' name='ticketId' fullWidth />
                     </Box>
-                    <Box sx={{ display: 'flex', flexDirection: { xs: 'column-reverse', md: 'row' }, justifyContent: { xs: 'space-between', md: 'flex-start' }, minWidth: '400px', mb: '25px' }}>
+                    <Box sx={{ display: 'flex', flexDirection: { xs: 'column-reverse', md: 'row' }, justifyContent: { xs: 'space-between', md:'flex-start' }, width:{xs:'100%', md:'800px'}, mb: '25px' }}>
                         <Button variant='contained' color='error' onClick={handleDeleteAll} sx={{ my: '15px' }}>Delete Resolved tickets</Button>
                         <Button variant='contained' type='submit' color='secondary' sx={{ my: '15px', ml: { md: '380px' } }}>Delete Entered ticket</Button>
                     </Box>

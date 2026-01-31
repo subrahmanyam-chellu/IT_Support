@@ -9,6 +9,7 @@ import { redirect, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../../App';
 import { jwtDecode } from 'jwt-decode';
+import CircularIndeterminate from '/src/components/CircularIndeterminate';
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -16,6 +17,7 @@ const Login = () => {
     const navigate = useNavigate();
     const [error, setError] = useState("");
     const {setUser} = useContext(AuthContext);
+    const [loading, setLoading]=useState(false);
     
     useEffect(()=>{
         const token = localStorage.getItem("x-token");
@@ -28,6 +30,7 @@ const Login = () => {
     }, [navigate]);
 
     const handleLogin = async(e) => {
+        setLoading(true);
         e.preventDefault();
         try{
             const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login`,
@@ -47,11 +50,12 @@ const Login = () => {
         }catch(err){
             setError(err.response?.data?.message || "Login failed");
         }
-        
+        setLoading(false);
     };
 
     return (
         <MainLayout>
+            {loading&&<CircularIndeterminate texts={"Verifying...."}/>}
             <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
                 <Box sx={{ my: { xs: '35px' } }}>
                     <Typography
@@ -67,7 +71,7 @@ const Login = () => {
                     </Typography>
                 </Box>
 
-                <form className="form" onSubmit={handleLogin} style={{ minWidth: "400px", maxWidth: "800px", margin: "auto" }}>
+                <form className="form" onSubmit={handleLogin} style={{width:{xs:'100%', md:'800px'}, margin: "auto" }}>
                     <TextField
                         label="Email"
                         variant="outlined"

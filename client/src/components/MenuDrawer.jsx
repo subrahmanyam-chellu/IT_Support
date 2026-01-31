@@ -15,39 +15,60 @@ import HomeIcon from '@mui/icons-material/Home';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function MenuDrawer({ open, onClose }) {
-  const fields = [{ lable: "Home", icon: <HomeIcon fontSize='large' />, path:'/home' },
-  { lable: "Generate Ticket", icon: <GeneratingTokensIcon fontSize='large' />, path:'/generate' },
-  { lable: "My Tickets", icon: <ConfirmationNumberIcon fontSize='large' />, path:'/mytickets' },
-  { lable: "Login", icon: <LoginIcon fontSize='large'/>, path:'/login' }
+  const fields = [{ lable: "Home", icon: <HomeIcon fontSize='large' />, path: '/home' },
+  { lable: "Generate Ticket", icon: <GeneratingTokensIcon fontSize='large' />, path: '/generate' },
+  { lable: "My Tickets", icon: <ConfirmationNumberIcon fontSize='large' />, path: '/mytickets' },
+  { lable: "Login", icon: <LoginIcon fontSize='large' />, path: '/login' }
   ];
+  const [logout, setLogout] = React.useState(false);
 
   const navigate = useNavigate();
+  const token = localStorage.getItem("x-token");
+  if (token) {
+    const decode = jwtDecode(token);
+    if (decode.exp * 1000 > Date.now()) {
+      setLogout(true);
+    }
+  }
+
+  const logoutHandler= ()=>{
+    localStorage.removeItem("x-token");
+    setLogout(false);
+  }
 
 
   const list = (anchor) => (
     <Box>
-      <ListItemButton sx={{mb:{lg:'40px'}}}>
+      <ListItemButton sx={{ mb: { lg: '40px' } }}>
         <ListItemIcon sx={{ color: 'black', ml: { xs: '210px', md: '335px' } }}>
-          <CloseRoundedIcon  onClick={()=>{onClose();}} fontSize='large'/>
+          <CloseRoundedIcon onClick={() => { onClose(); }} fontSize='large' />
         </ListItemIcon>
         <Divider />
       </ListItemButton>
       <List>
         {fields.map((item, index) => (
           <ListItem key={index} disablePadding>
-            <ListItemButton sx={{ m:{xs:'20px', sm:'25px'}}} onClick={()=>navigate(item.path)}>
-              <ListItemIcon sx={{color:'black'}}>
+            <ListItemButton sx={{ m: { xs: '20px', sm: '25px' } }} onClick={() => navigate(item.path)}>
+              <ListItemIcon sx={{ color: 'black' }}>
                 {item.icon}
               </ListItemIcon>
               {/* <ListItemText primary={item.lable} sx={{ fontSize: '18px', color: 'black', fontWeight: 600 }} /> */}
-              <Typography sx={{fontSize:'20px', fontWeight:'bolder'}}>{item.lable}</Typography>
+              <Typography sx={{ fontSize: '20px', fontWeight: 'bolder' }}>{item.lable}</Typography>
               <Divider />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
+      <Button sx={{ m: { xs: '20px', sm: '25px' } }} onClick={logoutHandler}>
+          <LogoutIcon fontSize='large' sx={{color:'black', ml:{xs:'10px'}}}/>
+          {/* <ListItemText primary={item.lable} sx={{ fontSize: '18px', color: 'black', fontWeight: 600 }} /> */}
+          <Typography sx={{ textTransform:'none', fontSize: '20px', fontWeight: 'bolder', color:'black', ml:'22px' }}>Logout</Typography>
+          <Divider />
+        </Button>
     </Box>
   );
 

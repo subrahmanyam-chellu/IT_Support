@@ -29,7 +29,7 @@ export default function Tickets({ tickets }) {
 
   //React.useEffect(()=>setRows(tickets),[tickets]);
   React.useEffect(() => {
-    console.log(tickets);
+    //console.log(tickets);
     if (tickets) {
       const mapped = tickets.map(t => ({
         ticketId: t.ticketId,

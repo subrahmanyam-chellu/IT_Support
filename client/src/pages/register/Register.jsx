@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import CircularIndeterminate from '/src/components/CircularIndeterminate';
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -15,6 +16,7 @@ const Register = () => {
   const [verify, setVerify] = useState("");
   const [error, setError] = useState("");
   const [display, setDisplay] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -28,7 +30,7 @@ const Register = () => {
       );
       return;
     }
-
+    setLoading(true);
     try {
       await axios.post(`${import.meta.env.VITE_BACKEND_URL}/register`, {
         name,
@@ -42,10 +44,12 @@ const Register = () => {
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed");
     }
+    setLoading(false);
   };
 
   return (
     <MainLayout>
+      {loading&&<CircularIndeterminate texts={"Registering...."}/>}
       <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
         <Box sx={{ my: { xs: '35px' } }}>
           <Typography
@@ -61,7 +65,7 @@ const Register = () => {
           </Typography>
         </Box>
 
-        <form className="form" onSubmit={handleSubmit} style={{ minWidth: "400px", maxWidth: "800px", margin: "auto" }}>
+        <form className="form" onSubmit={handleSubmit} style={{ width:{xs:'100%', md:'800px'}, margin: "auto" }}>
           <TextField label="Name" fullWidth value={name} onChange={(e) => setName(e.target.value)} required sx={{ mb: 2 }} />
           <TextField label="Email" fullWidth type="email" value={email} onChange={(e) => setEmail(e.target.value)} required sx={{ mb: 2 }} />
           <TextField label="Password" fullWidth type="password" value={password} onChange={(e) => setPassword(e.target.value)} required sx={{ mb: 2 }} />
@@ -70,9 +74,10 @@ const Register = () => {
           {error && <Typography color="error" sx={{ mb: 2, whiteSpace: "pre-line" }}>{error}</Typography>}
 
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Button type="submit" variant="contained" color="primary">Submit</Button>
-            {error && <Typography color="success" sx={{ mb: 2, whiteSpace: "pre-line" }}>{display}</Typography>}
             <Button type="button" variant="contained" color="success" onClick={() => navigate('/login')}>Login</Button>
+            {error && <Typography color="success" sx={{ mb: 2, whiteSpace: "pre-line" }}>{display}</Typography>}
+            <Button type="submit" variant="contained" color="primary">Submit</Button>
+            
           </Box>
         </form>
         <About />

@@ -10,6 +10,7 @@ import Back from '/src/components/Back';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
+import CircularIndeterminate from '/src/components/CircularIndeterminate';
 
 const Generate = () => {
   const [title, setTitle] = useState("");
@@ -17,6 +18,7 @@ const Generate = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [users, setUsers] = useState({});
+  const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("x-token");
 
   useEffect(() => {
@@ -40,6 +42,7 @@ const Generate = () => {
       setError("Description must be at least 15 characters long.");
       return;
     }
+    setLoading(true);
     try {
       const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/createticket`, {
         title: title,
@@ -54,14 +57,15 @@ const Generate = () => {
       }
 
     } catch (err) {
-      setError(err);
+      setError(err.toString());
 
     }
-
+    setLoading(false);
   };
 
   return (
     <MainLayout >
+      {loading&&<CircularIndeterminate texts={"Generating....."}/>}
       <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
         <Box sx={{ my: { xs: '35px' } }}>
           <Typography
@@ -77,7 +81,7 @@ const Generate = () => {
           </Typography>
         </Box>
 
-        <form className="form" onSubmit={handleSubmit} style={{ minWidth: "400px", maxWidth: "800px", margin: "auto" }}>
+        <form className="form" onSubmit={handleSubmit} style={{width:{xs:'100%', md:'800px'} , margin: "auto" }}>
           <TextField
             label="Title"
             variant="outlined"
