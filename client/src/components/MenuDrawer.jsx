@@ -28,16 +28,21 @@ export default function MenuDrawer({ open, onClose }) {
 
   const navigate = useNavigate();
   const token = localStorage.getItem("x-token");
-  if (token) {
-    const decode = jwtDecode(token);
-    if (decode.exp * 1000 > Date.now()) {
-      setLogout(true);
+  React.useEffect(() => {
+    const token = localStorage.getItem("x-token");
+    if (token) {
+      const decode = jwtDecode(token);
+      if (decode.exp * 1000 > Date.now()) {
+        setLogout(true);
+      }
     }
-  }
+  }, []);
 
-  const logoutHandler= ()=>{
+
+  const logoutHandler = () => {
     localStorage.removeItem("x-token");
     setLogout(false);
+    window.location.reload();
   }
 
 
@@ -63,12 +68,12 @@ export default function MenuDrawer({ open, onClose }) {
           </ListItem>
         ))}
       </List>
-      <Button sx={{ m: { xs: '20px', sm: '25px' } }} onClick={logoutHandler}>
-          <LogoutIcon fontSize='large' sx={{color:'black', ml:{xs:'10px'}}}/>
-          {/* <ListItemText primary={item.lable} sx={{ fontSize: '18px', color: 'black', fontWeight: 600 }} /> */}
-          <Typography sx={{ textTransform:'none', fontSize: '20px', fontWeight: 'bolder', color:'black', ml:'22px' }}>Logout</Typography>
-          <Divider />
-        </Button>
+      {logout&&<Button sx={{ m: { xs: '20px', sm: '25px' } }} onClick={logoutHandler}>
+        <LogoutIcon fontSize='large' sx={{ color: 'black', ml: { xs: '10px' } }} />
+        {/* <ListItemText primary={item.lable} sx={{ fontSize: '18px', color: 'black', fontWeight: 600 }} /> */}
+        <Typography sx={{ textTransform: 'none', fontSize: '20px', fontWeight: 'bolder', color: 'black', ml: '22px' }}>Logout</Typography>
+        <Divider />
+      </Button>}
     </Box>
   );
 
