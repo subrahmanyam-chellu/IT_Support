@@ -11,11 +11,13 @@ const authToken = require('./middlewares/authToken');
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+dotenv.config();
+
 app.use(cors({
     origin: process.env.CLIENT_URL,
     credentials: true
 }));
-dotenv.config();
+
 app.listen(process.env.PORT||5000, () => { console.log("Server Started......") });
 mongoose.connect(process.env.MONGO)
     .then(() => console.log("database connected"))
@@ -100,6 +102,7 @@ app.post('/createticket', authToken, async (req, res) => {
             })
         })
         if (response.ok) {
+            //console.log("okay");
             let predict = await response.json();
             let ticket = new AppTicket({
                 ticketId: predict.ticket_id, title, description, category: predict.predicted_category,
@@ -108,10 +111,10 @@ app.post('/createticket', authToken, async (req, res) => {
             let result = await ticket.save();
             if (result) {
                 res.status(200).send("ticket submitted successfully");
-                //console.log("ticket submitted successfully");
+               // console.log("ticket submitted successfully");
             }
             else {
-                res.status(500).send("internal server error");
+                res.status(500).send("internal server error due to model output");
                 //console.log("internal server error1");
             }
         } else {
@@ -121,7 +124,7 @@ app.post('/createticket', authToken, async (req, res) => {
     }
     catch (err) {
         res.status(500).send("internal server error");
-        //console.log("internal server error2");
+       // console.log("internal server error2");
     }
 })
 
