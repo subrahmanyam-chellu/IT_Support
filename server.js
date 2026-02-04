@@ -102,26 +102,26 @@ app.post('/createticket', authToken, async (req, res) => {
         if (response.ok) {
             let predict = await response.json();
             let ticket = new AppTicket({
-                ticketId: predict.ticket_id, title, description, category: predict.predicted_label[0],
-                priority: predict.predicted_label[1], time: predict.tStamp, createdBy, status
+                ticketId: predict.ticket_id, title, description, category: predict.predicted_category,
+                priority: predict.predicted_priority, time: predict.tStamp, createdBy, status
             });
             let result = await ticket.save();
             if (result) {
                 res.status(200).send("ticket submitted successfully");
-               // console.log("ticket submitted successfully");
+                //console.log("ticket submitted successfully");
             }
             else {
                 res.status(500).send("internal server error");
-               // console.log("internal server error");
+                //console.log("internal server error1");
             }
         } else {
             res.status(404).send("we can't fetch data from model");
-          //  console.log("we can't fetch data from model");
+            //console.log("we can't fetch data from model");
         }
     }
     catch (err) {
         res.status(500).send("internal server error");
-       // console.log("internal server error");
+        //console.log("internal server error2");
     }
 })
 
