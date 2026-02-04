@@ -7,6 +7,7 @@ const cors = require('cors');
 const AppUser = require('./models/AppUser');
 const AppTicket = require('./models/AppTicket');
 const authToken = require('./middlewares/authToken');
+const axios = require('axios');
 
 const app = express();
 app.use(express.json());
@@ -88,45 +89,42 @@ app.get('/allusers', authToken, async (req, res) => {
 })
 
 app.post('/createticket', authToken, async (req, res) => {
-    try {
-        const { title, description } = req.body;
-        const createdBy = req.user.user.email;
-        const status = "open";
-        const response = await fetch(process.env.MODEL_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                issue: description
-            })
-        })
-        if (response.ok) {
-            //console.log("okay");
-            let predict = await response.json();
-            let ticket = new AppTicket({
-                ticketId: predict.ticket_id, title, description, category: predict.predicted_category,
-                priority: predict.predicted_priority, time: predict.tStamp, createdBy, status
-            });
-            let result = await ticket.save();
-            if (result) {
-                res.status(200).send("ticket submitted successfully");
-               // console.log("ticket submitted successfully");
-            }
-            else {
-                res.status(500).send("internal server error due to model output");
-                //console.log("internal server error1");
-            }
-        } else {
-            res.status(404).send("we can't fetch data from model");
-            //console.log("we can't fetch data from model");
-        }
+  try {
+    const { title, description } = req.body;
+    const createdBy = req.user.user.email;
+    const status = "open";
+
+    const response = await axios.post(process.env.MODEL_URL, 
+      { issue: description }, 
+      { headers: { "Content-Type": "application/json" } }
+    );
+
+    const predict = response.data;
+
+    const ticket = new AppTicket({
+      ticketId: predict.ticket_id,
+      title,
+      description,
+      category: predict.predicted_category,
+      priority: predict.predicted_priority,
+      time: predict.tStamp,
+      createdBy,
+      status
+    });
+
+    const result = await ticket.save();
+    if (result) {
+      res.status(200).send("ticket submitted successfully");
+      //console.log("ticket submitted successfully");
+    } else {
+      res.status(500).send("internal server error due to model output");
+      //console.log("internal server error1");
     }
-    catch (err) {
-        res.status(500).send("internal server error");
-       // console.log("internal server error2");
-    }
-})
+  } catch (err) {
+    //console.error(err);
+    res.status(500).send("internal server error");
+  }
+});
 
 app.get('/alltickets', authToken, async (req, res) => {
     try {
