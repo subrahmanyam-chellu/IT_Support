@@ -52,7 +52,7 @@ const Generate = () => {
           "x-token": token
         }
       });
-      if (response.status == 200) {
+      if (response.status == 201) {
         alert(`Form submitted!\nTitle: ${title}\nDescription: ${description}`);
       }
 
