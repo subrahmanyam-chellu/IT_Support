@@ -90,44 +90,41 @@ app.get('/allusers', authToken, async (req, res) => {
 
 app.post('/createticket', authToken, async (req, res) => {
   try {
-    console.log("method called");
     const { title, description } = req.body;
     const createdBy = req.user.user.email;
     const status = "open";
-    console.log(description);
 
-    const response = await axios.post(process.env.MODEL_URL, 
-      { issue: description }, 
+    const response = await axios.post(
+      process.env.MODEL_URL,
+      { issue: description },
       { headers: { "Content-Type": "application/json" } }
     );
-    console.log("called");
-    console.log(response.data);
-    res.status(200).send('ok');
 
     const predict = response.data;
-    console.log(predict);
-    // const ticket = new AppTicket({
-    //   ticketId: predict.ticket_id,
-    //   title,
-    //   description,
-    //   category: predict.predicted_category,
-    //   priority: predict.predicted_priority,
-    //   time: predict.tStamp,
-    //   createdBy,
-    //   status
-    // });
+    if (!predict) {
+      return res.status(502).send("Prediction service failed");
+    }
 
-    // const result = await ticket.save();
-    // if (result) {
-    //   res.status(200).send("ticket submitted successfully");
-    //   //console.log("ticket submitted successfully");
-    // } else {
-    //   res.status(500).send("internal server error due to model output");
-    //   //console.log("internal server error1");
-    // }
+    const ticket = new AppTicket({
+      ticketId: predict.ticket_id,
+      title,
+      description,
+      category: predict.predicted_category,
+      priority: predict.predicted_priority,
+      time: predict.tStamp,
+      createdBy,
+      status
+    });
+
+    const result = await ticket.save();
+    if (result) {
+      return res.status(201).send("Ticket submitted successfully");
+    } else {
+      return res.status(500).send("Internal server error due to Mongo");
+    }
   } catch (err) {
-    //console.error(err);
-    res.status(500).send("internal server error");
+    console.error(err);
+    return res.status(500).send("Internal server error");
   }
 });
 
