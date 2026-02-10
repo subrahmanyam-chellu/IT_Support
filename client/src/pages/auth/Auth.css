@@ -1,0 +1,8 @@
+.forms {
+    transition: all 0.2s ease;
+}
+
+.forms:hover {
+    transform: translateY(-5px);
+    box-shadow: 2px 2px 0.2px 1px #7db8c2;
+}

@@ -1,0 +1,13 @@
+.MuiButton-root.lauchbtn{
+    background: none;
+    color:black;
+}
+.MuiButton-root.lauchbtn:active {
+  background: linear-gradient(to right, rgba(230, 0, 255, 0.899), rgba(0, 221, 255, 0.765));
+  border-radius: 15px;
+  /* font-size: large; */
+  text-transform: none;
+  white-space: normal;
+  text-align: center;
+  color: blanchedalmond;
+}

@@ -25,8 +25,6 @@ export default function Tickets({ tickets }) {
   const [rows, setRows] = useState([{ ticketId: "256", title: 'hello', description: 'hello ', category: 'wow', priority: 'highe', time: '466', status: 'opne' }]);
   
 
-  
-
   //React.useEffect(()=>setRows(tickets),[tickets]);
   React.useEffect(() => {
     //console.log(tickets);

@@ -25,7 +25,6 @@ export default function BasicSelect({ valued, row }) {
         });
       if (response.status == 200) {
         alert("successfully updated");
-        window.location.reload();
       } else {
         alert("updation failed");
       }
