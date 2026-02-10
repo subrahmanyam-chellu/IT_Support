@@ -95,7 +95,7 @@ app.post('/createticket', authToken, async (req, res) => {
     const status = "open";
 
     const response = await axios.post(
-      `${process.env.MODEL_URl}/predict`,
+      `${process.env.MODEL_URL}/predict`,
       { issue: description },
       { headers: { "Content-Type": "application/json" } }
     );
@@ -233,7 +233,7 @@ app.patch('/updateticket/:id', authToken, async (req, res) => {
 });
 
 app.get('/model', async(req, res)=>{
-    const response = await axios.get(process.env.MODEL_URl);
+    const response = await axios.get(process.env.MODEL_URL);
     if(response.status==200){
         res.status(200).send('okay');
     }
@@ -245,7 +245,7 @@ app.post('/model/predict', async (req, res) => {
 
     const response = await axios.post(
       `${process.env.MODEL_URL}/predict`,
-      { issue: req.body.issue },   // ✅ send plain string
+      { issue: req.body.issue },   
       { headers: { "Content-Type": "application/json" } }
     );
 
