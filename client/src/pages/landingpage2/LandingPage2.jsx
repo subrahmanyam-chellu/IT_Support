@@ -36,6 +36,7 @@ function DrawerAppBar(props) {
   const [isAdmin, setIsAdmin] = React.useState();
   const [isModelOn, setIsModelOn] = React.useState();
   
+
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
@@ -76,7 +77,7 @@ function DrawerAppBar(props) {
 
     }
     callModel();
-  }, [])
+  }, [isModelOn])
 
   const handleLaunch = () => {
       if (!token) {
@@ -91,7 +92,7 @@ function DrawerAppBar(props) {
   }
 
   const callModel = async()=>{
-    const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/`);
+    const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/model`);
     if(response.status==200){
       setIsModelOn(true);
     }else{

@@ -76,7 +76,7 @@ const User = () => {
   }
 
   const callModel = async()=>{
-    const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/`);
+    const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/model`);
     if(response.status==200){
       setIsModelOn(true);
     }else{

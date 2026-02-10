@@ -3,17 +3,23 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import React from 'react'
 import { keyframes } from '@emotion/react'
+import { useNavigate } from 'react-router-dom'
 
-const HeroL = ({model}) => {
+const HeroL = ({ model }) => {
+ 
+  const navigate = useNavigate();
+  const pulse = keyframes`0%{transform:scale(1)} 30%{transform:scale(1.2)} 60%{transform:scale(1.4)} 80%{transform:scale(1.2) 100%{transform:scale(1)}`;
 
- const pulse = keyframes`0%{transform:scale(1)} 30%{transform:scale(1.2)} 60%{transform:scale(1.4)} 80%{transform:scale(1.2) 100%{transform:scale(1)}`;
+  const handle = ()=>{
+    navigate('/auth');
+  }
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', backgroundColor: '#e8dcb381' }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', width: { xs: '380px', md: '800px' }, mx: { xs: '10px', md: '352px' } }}>
+        {model && <Typography color='success' sx={{ fontSize: { xs: 14, md: 18 }, mt: { xs: 2, md: 5 }, textAlign: 'center', animation: `${pulse} 2s infinite` }}>AI model is connected.</Typography>}
+        {!model && <Typography color='error' sx={{ fontSize: { xs: 14, md: 18 }, mt: { xs: 2, md: 5 }, textAlign: 'center', animation: `${pulse} 2s infinite` }}>Connecting to AI mode....</Typography>}
         <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, alignItems: 'center', justifyContent: 'space-between', mt: { md: '75px' } }}>
-          {model&&<Typography color='success' sx={{fontSize:{xs:14, md:18}, mt:{xs:2, md:3}, textAlign:'center', animation:`${pulse} 2s infinite`}}>AI model is connected.</Typography>}
-          {!model&&<Typography color='error' sx={{fontSize:{xs:14, md:18}, mt:{xs:2, md:3}, textAlign:'center', animation:`${pulse} 2s infinite`}}>Connecting to AI mode....</Typography>}
           <Typography sx={{ fontSize: { xs: 60, md: 95 }, fontWeight: 600 }}>Intelligent</Typography>
           <Typography sx={{ fontSize: { xs: 60, md: 95 }, fontWeight: 600 }}>Support</Typography>
         </Box>
@@ -34,9 +40,9 @@ const HeroL = ({model}) => {
         <Box>
           <Button variant='contained' sx={{
             width: { xs: '150px', md: '220px' }, height: { xs: '40px', md: '50px' }, textTransform: 'none',
-            fontSize: {xs:14, md:18}, fontWeight: 790, my: { xs: '25px', md: '45px' }, background: "linear-gradient(to right, rgba(102, 0, 255, 0.59), rgba(0, 149, 255, 0.77))",
+            fontSize: { xs: 14, md: 18 }, fontWeight: 790, my: { xs: '25px', md: '45px' }, background: "linear-gradient(to right, rgba(102, 0, 255, 0.59), rgba(0, 149, 255, 0.77))",
             borderRadius: { xs: '', md: '45px' }
-          }}>Get Started Free </Button>
+          }} onClick={handle}>Get Started Free </Button>
         </Box>
       </Box>
     </Box>

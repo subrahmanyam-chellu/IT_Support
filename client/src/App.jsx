@@ -43,7 +43,7 @@ const App = () => {
     //<Admin/>
     <Router>
       <Routes>
-        <Route path='/home' element={<LandingPage2/>} />
+        <Route path='/' element={<LandingPage2/>} />
         <Route path='/auth' element={<Auth/>} />
         <Route path='/user' element={<User/>} />
         <Route path='/admin' element={<Admin/>} />

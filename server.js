@@ -95,7 +95,7 @@ app.post('/createticket', authToken, async (req, res) => {
     const status = "open";
 
     const response = await axios.post(
-      process.env.MODEL_URL,
+      `${process.env.MODEL_URl}/predict`,
       { issue: description },
       { headers: { "Content-Type": "application/json" } }
     );
@@ -229,6 +229,32 @@ app.patch('/updateticket/:id', authToken, async (req, res) => {
     }
   } else {
     res.status(403).json({ message: 'You have no rights to this' });
+  }
+});
+
+app.get('/model', async(req, res)=>{
+    const response = await axios.get(process.env.MODEL_URl);
+    if(response.status==200){
+        res.status(200).send('okay');
+    }
+
+});
+
+app.post('/model/predict', async (req, res) => {
+  try {
+
+    const response = await axios.post(
+      `${process.env.MODEL_URL}/predict`,
+      { issue: req.body.issue },   // ✅ send plain string
+      { headers: { "Content-Type": "application/json" } }
+    );
+
+    res.status(200).json(response.data);
+  } catch (err) {
+    console.error("Error from model service:", err.response?.data || err.message);
+    res.status(err.response?.status || 500).json({
+      error: err.response?.data || "Internal server error"
+    });
   }
 });
 

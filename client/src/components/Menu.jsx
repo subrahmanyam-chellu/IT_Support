@@ -7,7 +7,7 @@ const Menu = ({section, setSection }) => {
     const navigate = useNavigate();
     const handleLogout = () => {
       localStorage.removeItem("x-token");
-      navigate('/home');
+      navigate('/');
 
     };
 

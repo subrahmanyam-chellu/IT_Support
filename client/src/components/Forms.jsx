@@ -39,7 +39,7 @@ const Forms = ({ isLogin, setIsLogin, isRegister, setIsRegister }) => {
     }
 
     const handleRegister = async (e) => {
-        // e.preventDefault();
+         e.preventDefault();
         try {
             const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/register`, { name, email, password });
             if (response.status === 200) {
@@ -53,12 +53,16 @@ const Forms = ({ isLogin, setIsLogin, isRegister, setIsRegister }) => {
     };
 
     const handleLogin = async (e) => {
-        // e.preventDefault();
+         e.preventDefault();
         try {
             const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login`, { email, password });
             if (response.status === 200) {
                 localStorage.setItem("x-token", response.data.token);
-                navigate('/home');
+                if(response.data.user.role.toLowerCase==='admin'){
+                    navigate('/admin');
+                }else{
+                    navigate('/user');
+                }
             }
         } catch (err) {
             setError("Login failed. Please check your credentials.");
@@ -172,10 +176,10 @@ const Forms = ({ isLogin, setIsLogin, isRegister, setIsRegister }) => {
                         required
                         sx={{ mb: 3 }}
                     />
-                    {/* {
+                    {
                         error&&
                         <Typography color='error' sx={{textAlign:'center', textTransform:'none', my:'8px'}}>{error}</Typography>
-                    } */}
+                    } 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Button type="button" variant="text" sx={{ textTransform: 'none', fontSize: 12, fontWeight: 500 }}>Forgot Password</Button>
                         <Button type="submit" variant="contained" color='success' sx={{ textTransform: 'none', fontSize: 18, fontWeight: 500, borderRadius: '10px' }} onClick={() => { handleLogin(); }}>Login</Button>
