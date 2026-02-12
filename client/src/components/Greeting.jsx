@@ -3,9 +3,10 @@ import { Box, Typography } from '@mui/material';
 import axios from 'axios';
 import { keyframes } from '@mui/material';
 
-const Greeting = ({name, aiStatus}) => {
+const Greeting = ({ name, aiStatus }) => {
   const [greet, setGreet] = useState({ greet: "Good Morning", color: "#000" });
   const pulse = keyframes`0%{transform:scale(1)} 30%{transform:scale(1.2)} 60%{transform:scale(1.4)} 80%{transform:scale(1.2) 100%{transform:scale(1)}`;
+  const shortName = (name??"")?.substring(0,9);
 
   const greetSetter = () => {
     const time = new Date();
@@ -27,29 +28,31 @@ const Greeting = ({name, aiStatus}) => {
   }, []);
 
   return (
-    <Box sx={{ width:{xs:'320px', md:'1000px'}, borderRadius: '15px', my:{xs:'15px', md:'15px'}, backgroundColor: 'blanchedalmond' }}>
-      <Typography
-        sx={{
-          color: greet.color,
-          textAlign: 'left',
-          fontSize: { xs: 24, md: 60 },
-          fontWeight: 600,
-        }}
-      >
-        {greet.greet}{name}
-      </Typography>
-      <Typography
-        sx={{
-          fontSize: { xs: 14, md: 24 },
-          fontWeight: 400,
-          my: { xs: '15px', md: '30px' },
-          textAlign:'left',
-        }}
-      >
-        Welcome back to your dashboard
-      </Typography>
-      {aiStatus&&<Typography color='success' sx={{fontSize:{xs:14, md:18}, textAlign:'center', animation:`${pulse} 2s infinite`}}>AI connected.</Typography>}
-      {!aiStatus&&<Typography color='error' sx={{fontSize:{xs:14, md:18}, textAlign:'center', animation:`${pulse} 2s infinite`}}>connecting to AI...</Typography>}
+    <Box sx={{width:{xs:'88%', md:'1000px'}, justifyContent:{xs:'center', md:'flex-start'}}}>
+      <Box sx={{ width: { xs: '88%', md: '1000px' }, borderRadius: '15px', my: { xs: '10px', md: '5px' }, backgroundColor: 'blanchedalmond', pb:{sm:'10px'} }}>
+        <Typography
+          sx={{
+            color: greet.color,
+            textAlign: 'left',
+            fontSize: { xs: 20, md: 60 },
+            fontWeight: 600,
+          }}
+        >
+          {greet.greet}{shortName}...
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: { xs: 14, md: 24 },
+            fontWeight: 400,
+            my: { xs: '15px', md: '30px' },
+            textAlign: 'left',
+          }}
+        >
+          Welcome back to your dashboard
+        </Typography>
+        {aiStatus && <Typography color='success' sx={{ fontSize: { xs: 14, md: 18 }, textAlign: 'center', animation: `${pulse} 2s infinite` }}>AI connected.</Typography>}
+        {!aiStatus && <Typography color='error' sx={{ fontSize: { xs: 14, md: 18 }, textAlign: 'center', animation: `${pulse} 2s infinite` }}>connecting to AI...</Typography>}
+      </Box>
     </Box>
   );
 };

@@ -11,12 +11,13 @@ import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 import CircularIndeterminate from '/src/components/CircularIndeterminate';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../../components/Footer';
 
 
 const Admin = () => {
 
     const [section, setSection] = useState(1);
-    const [tickets, setTickets] = useState([]);
+    const [tickets, setTickets] = useState([false,""]);
     const [counts, setCounts] = useState({ allCount: '0', pCount: '0', rCount: '0' });
     const [loading, setLoading] = useState([false, "Loading..."]);
     const [error, setError] = useState();
@@ -32,16 +33,16 @@ const Admin = () => {
             const decode = jwtDecode(token);
             if (decode.exp * 1000 < Date.now()) {
                 localStorage.removeItem("x-token");
-                 navigate('/auth');
+                navigate('/auth');
             } else {
-                if(decode.user.role.toLowerCase()!=='admin'){
+                if (decode.user.role.toLowerCase() !== 'admin') {
                     navigate('/auth');
                 }
                 setUsers(decode.user);
                 callModel();
                 ticketsHandler();
                 countsHandler();
-                
+
             }
         }
     }, [TicketsA, isModelOn]);
@@ -111,14 +112,17 @@ const Admin = () => {
 
     return (
         <>
-            {loading[0] && <CircularIndeterminate texts={loading[1]} />}
+        {(loading[0])?(<Box sx={{display:'flex', width:'100%', height:'100vh', alignItems:'center', justifyContent:'center'}}><CircularIndeterminate texts={loading[1]} /></Box>):(
+            <Box sx={{ backgroundColor: 'beige' }}>
             <Box sx={{ width: '100%', backgroundColor: 'beige', height: '100%' }}>
-                <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, justifyContent: 'flex-start' }}>
-                    <Box sx={{ width: { xs: '100%', md: '350px', m: { xs: '30px' } } }}>
+                <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, justifyContent: 'flex-start', alignItems: 'center' }}>
+                    <Box sx={{ width: { xs: '100%', md: '350px' }}}>
                         <Menu section={section} setSection={handleSection} />
                     </Box>
-                    <Box sx={{ m: { xs: '35px', md: '0px' }, width: { xs: '320px', md: '800px' } }}>
-                        <Greeting name={users?.name} aiStatus={isModelOn} />
+                    <Box sx={{ width: { xs: '100%', md: '800px' }, display: 'flex', flexDirection: 'column', justifyContent: { xs: 'center' } }}>
+                        <Box sx={{ ml: { xs: '1rem', md: '0rem' } }}>
+                            <Greeting name={users?.name} aiStatus={isModelOn} />
+                        </Box>
                         {section == 1 &&
                             <>
                                 <Counts counts={counts} />
@@ -136,7 +140,14 @@ const Admin = () => {
                     </Box>
                 </Box>
             </Box>
+            <Box sx={{ display: { sm: 'none' }, mt:'15px' }}>
+                <Footer />
+            </Box>
+        </Box>
+
+        )};
         </>
+        
     )
 }
 

@@ -15,6 +15,7 @@ import Auth from './pages/auth/Auth';
 import User from './pages/user/User';
 import User1 from './pages/user/User1';
 import Admin from './pages/admin/Admin';
+import Home1 from './pages/home/Home1';
 
  export const AuthContext = createContext(null);
 
@@ -43,7 +44,7 @@ const App = () => {
     //<Admin/>
     <Router>
       <Routes>
-        <Route path='/' element={<LandingPage2/>} />
+        <Route path='/' element={<Home1/>} />
         <Route path='/auth' element={<Auth/>} />
         <Route path='/user' element={<User/>} />
         <Route path='/admin' element={<Admin/>} />

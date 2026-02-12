@@ -103,10 +103,10 @@ function DrawerAppBar(props) {
   
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', justifyContent:'center' }}>
       <CssBaseline />
-      <AppBar component="nav" sx={{ backgroundColor: 'blanchedalmond', boxShadow: '4', height: { xs: '65px', md: '85px' }, paddingTop: { xs: '4.5px', md: '11px' } }}>
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
+      <AppBar component="nav" position='fixed' sx={{width:'100%', backgroundColor: 'blanchedalmond', boxShadow: '4', height: { xs: '65px', md: '85px' }, paddingTop: { xs: '4.5px', md: '11px' } }}>
+        <Toolbar sx={{ display:'flex', justifyContent: 'space-between' }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -145,7 +145,7 @@ function DrawerAppBar(props) {
           {drawer}
         </Drawer>
       </nav>
-      <Box component="main" sx={{ flexGrow: 1, justifyContent: 'center' }}>
+      <Box component="main" sx={{ flexGrow: 1, display:'flex', flexDirection:'column', justifyContent: 'center', mx:{xs:'10px', md:'15px'} }}>
         <Toolbar />
         <HeroL model={isModelOn} />
         <Section1 />

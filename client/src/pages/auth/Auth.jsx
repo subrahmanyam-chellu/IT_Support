@@ -29,23 +29,23 @@ const Auth = () => {
     },[]);
 
     return (
-        <Box sx={{ p: 4, maxWidth: 800, mx: 'auto'}}>
+        <Box sx={{ p: 1, maxWidth: 800, mx: 'auto', mb:{xs:'15px', sm:'0px'}, height:'100%'}}>
             <Box mb={4}>
                 {isRegister ? (
                     <>
-                        <Typography sx={{ fontSize: { xs: 45, md:60 }, fontWeight: { xs: 600 }, textAlign: 'center' }}>
+                        <Typography sx={{ fontSize: { xs: 25, md:60 }, fontWeight: { xs: 600 }, textAlign: 'center' }}>
                             Join Our Platform
                         </Typography>
-                        <Typography sx={{ fontSize: { xs: 18, md:24 }, fontWeight: 500, textAlign: 'center', my: { xs: '15px' } }}>
+                        <Typography sx={{ fontSize: { xs: 16, md:24 }, fontWeight: 500, textAlign: 'center', my: { xs: '15px' } }}>
                             Create your account to experience intelligent support automation
                         </Typography>
                     </>
                 ) : (
                     <>
-                        <Typography sx={{ fontSize: { xs: 45, md:60 }, fontWeight: { xs: 600 }, textAlign: 'center' }}>
+                        <Typography sx={{ fontSize: { xs: 25, md:60 }, fontWeight: { xs: 600 }, textAlign: 'center' }}>
                             Welcome Back
                         </Typography>
-                        <Typography sx={{ fontSize: { xs: 18, md:24 }, fontWeight: 500, textAlign: 'center', my: { xs: '15px' } }}>
+                        <Typography sx={{ fontSize: { xs: 16, md:24 }, fontWeight: 500, textAlign: 'center', my: { xs: '15px' } }}>
                             Sign in to access your AI-powered support dashboard
                         </Typography>
                     </>

@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import CircularIndeterminate from '/src/components/CircularIndeterminate';
 
 const Forms = ({ isLogin, setIsLogin, isRegister, setIsRegister }) => {
 
@@ -13,6 +14,8 @@ const Forms = ({ isLogin, setIsLogin, isRegister, setIsRegister }) => {
     const [password, setPassword] = useState('');
     const [repassword, setRepassword] = useState('');
     const [error, setError] = useState('');
+    const [errorL, setErrorL] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
@@ -36,48 +39,58 @@ const Forms = ({ isLogin, setIsLogin, isRegister, setIsRegister }) => {
         else if (password != repassword) {
             setError("both password should be same");
         }
+        else if(password == repassword){
+            setError("");
+        }
     }
 
     const handleRegister = async (e) => {
          e.preventDefault();
+         setLoading(true);
         try {
             const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/register`, { name, email, password });
             if (response.status === 200) {
                 alert("Registered successfully.");
+                setLoading(false);
                 navigate('/auth');
             }
         } catch (err) {
             setError("Registration failed. Please try again.");
-            console.error(err);
+            setLoading(false);
         }
     };
 
     const handleLogin = async (e) => {
          e.preventDefault();
+         setLoading(true);
         try {
             const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login`, { email, password });
             if (response.status === 200) {
                 localStorage.setItem("x-token", response.data.token);
-                if(response.data.user.role.toLowerCase==='admin'){
+                setLoading(false);
+                if(response.data.user.role.toLowerCase()==='admin'){
                     navigate('/admin');
                 }else{
                     navigate('/user');
                 }
+                
             }
         } catch (err) {
-            setError("Login failed. Please check your credentials.");
-            console.error(err);
+            setErrorL("Login failed. Please check your credentials.");
+            setLoading(false);
         }
     };
 
     useEffect(() => { validate(); }, [name, email, password, repassword]);
 
     return (
-        <Box sx={{ justifySelf: 'center', border: '2px solid cyan', borderRadius: '15px', boxShadow: '3px 3px 3px 3px #7db8c2', p: 2, justifyContent: 'center' }}>
+        <>
+        {loading &&<CircularIndeterminate texts='Loading...'/>}
+        <Box sx={{ justifySelf: 'center', border: '2px solid cyan', borderRadius: '15px', p: 2, justifyContent: 'center', '&:hover':{boxShadow: '3px 3px 13px 13px #7db8c2',transform: 'translateY(-5px)'} }}>
             <Box sx={{ width: '95%', display: 'flex', justifyContent: 'space-between', my: 3, p: 1, border: '2px solid cyan', borderRadius: '15px' }}>
                 <Button
                     variant={isRegister ? "contained" : "outlined"}
-                    onClick={toggleRegister}
+                    onClick={()=>{toggleRegister(); validate();}}
                     sx={{
                         flex: 1,
                         border: '0px',
@@ -90,7 +103,7 @@ const Forms = ({ isLogin, setIsLogin, isRegister, setIsRegister }) => {
                 </Button>
                 <Button
                     variant={isLogin ? "contained" : "outlined"}
-                    onClick={() => { toggleLogin(); }}
+                    onClick={() => { toggleLogin(); setError("") }}
                     sx={{
                         flex: 1,
                         border: '0px',
@@ -178,7 +191,7 @@ const Forms = ({ isLogin, setIsLogin, isRegister, setIsRegister }) => {
                     />
                     {
                         error&&
-                        <Typography color='error' sx={{textAlign:'center', textTransform:'none', my:'8px'}}>{error}</Typography>
+                        <Typography color='error' sx={{textAlign:'center', textTransform:'none', my:'8px'}}>{errorL}</Typography>
                     } 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Button type="button" variant="text" sx={{ textTransform: 'none', fontSize: 12, fontWeight: 500 }}>Forgot Password</Button>
@@ -187,6 +200,7 @@ const Forms = ({ isLogin, setIsLogin, isRegister, setIsRegister }) => {
                 </Box>
             )}
         </Box>
+        </>
     )
 }
 

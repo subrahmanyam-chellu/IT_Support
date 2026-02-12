@@ -25,7 +25,7 @@ const Section1 = () => {
                     const Logo = item.Logo;
                     return (
                     
-                    <Card key={i} className='cards' sx={{display:'flex', mb:'20px', justifyContent:'center', width:{xs:'320px', md:'330px'}, minHeight:{xs:'', md:'230px'},
+                    <Card key={i} className='cards' sx={{display:'flex', mb:'25px', justifyContent:'center', width:{xs:'320px', md:'330px'}, minHeight:{xs:'', md:'230px'},
                      background:"linear-gradient(to top, rgba(255, 179, 0, 0.59), rgba(0, 229, 255, 0.77))", boxShadow: '5px 5px 10px 3px grey', textAlign:'center'}}>
                         <CardContent>
                             <img src={Logo} style={{width:80, height:80}}/>

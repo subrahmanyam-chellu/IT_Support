@@ -16,16 +16,16 @@ const Explain = () => {
 
   return (
     <Box>
-        <Box sx={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center', my:'25px'}}>
-            <Typography sx={{fontSize:{xs:30, md:60}, fontWeight:600, mt:'75px'}}>Why Choose NexusAI?</Typography>
-            <Typography sx={{fontSize:{xs:18, md:24}, fontWeight:400, mt:'25px'}}>Built with enterprise-grade technology and security standards</Typography>
-            <Box sx={{display:'flex', flexDirection:{xs:'column', md:'row'}, width:'100%', justifyContent:'space-around', alignItems:'center',
-                                           minWidth:'300px', m:{xs:'35px', md:'65px'}}}>
+        <Box sx={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center', my:'25px', maxWidth:'100%'}}>
+            <Typography sx={{fontSize:{xs:28, md:60}, fontWeight:600, mt:'25px', textAlign:'center'}}>Why Choose NexusAI?</Typography>
+            <Typography sx={{fontSize:{xs:18, md:24}, fontWeight:400, mt:'25px', textAlign:'center'}}>Built with enterprise-grade technology and security standards</Typography>
+            <Box sx={{display:'flex', flexDirection:{xs:'column', md:'row'}, justifyContent:'space-around', alignItems:'center', mx:{xs:'20px', md:'15px'}, maxWidth:'100%'
+                                           }}>
                 {
                    data.map((item, i)=>{
                     return(
-                        <Card key={i} className='cards' sx={{background:"linear-gradient(to top, rgba(214, 166, 33, 0.54), rgba(206, 227, 17, 0.95))", boxShadow:'3px 3px 5px 5px grey', width:'320px', mb:'20px'}}>
-                            <CardContent sx={{display:'flex', flexDirection:'column', alignItems:'center', textAlign:'center', m:'35px' }}>
+                        <Card key={i} className='cards' sx={{background:"linear-gradient(to top, rgba(214, 166, 33, 0.54), rgba(206, 227, 17, 0.95))", boxShadow:'3px 3px 5px 5px grey', m:'20px'}}>
+                            <CardContent sx={{display:'flex', flexDirection:'column', alignItems:'center', textAlign:'center', m:'35px', minHeight:{xs:'215px'} }}>
                                 <img src={item.logo} style={{width:80, height:80}}></img>
                                 <Typography sx={{fontSize:30, fontWeight:'bolder', mb:'20px'}}>{item.data}</Typography>
                                 <Typography sx={{fontSize:14, mb:'25px'}}>{item.text}</Typography>
