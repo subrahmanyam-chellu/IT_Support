@@ -24,7 +24,7 @@ const Explain = () => {
                 {
                    data.map((item, i)=>{
                     return(
-                        <Card key={i} className='cards' sx={{background:"linear-gradient(to top, rgba(214, 166, 33, 0.54), rgba(206, 227, 17, 0.95))", boxShadow:'3px 3px 5px 5px grey', m:'20px'}}>
+                        <Card key={i} className='cards' sx={{background:"linear-gradient(to top, rgba(214, 166, 33, 0.28), rgba(206, 227, 17, 0.49))", boxShadow:'3px 3px 5px 5px grey', m:'20px'}}>
                             <CardContent sx={{display:'flex', flexDirection:'column', alignItems:'center', textAlign:'center', m:'35px', minHeight:{xs:'215px'} }}>
                                 <img src={item.logo} style={{width:80, height:80}}></img>
                                 <Typography sx={{fontSize:30, fontWeight:'bolder', mb:'20px'}}>{item.data}</Typography>

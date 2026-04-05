@@ -17,7 +17,7 @@ const Section1 = () => {
     ]
 
   return (
-    <Box sx={{width:'100%', backgroundColor:'#f4f4f4', minHeight:'300px'}}>
+    <Box sx={{width:'100%', backgroundColor:'#f4f4f45f', minHeight:'300px'}}>
         <Box sx={{display:'flex', flexDirection:{xs:'column', md:'row'}, justifyContent:'space-around',
               alignItems:'center', py:{xs:'40px', md:'40px'}}}>
             {
@@ -26,7 +26,7 @@ const Section1 = () => {
                     return (
                     
                     <Card key={i} className='cards' sx={{display:'flex', mb:'25px', justifyContent:'center', width:{xs:'320px', md:'330px'}, minHeight:{xs:'', md:'230px'},
-                     background:"linear-gradient(to top, rgba(255, 179, 0, 0.59), rgba(0, 229, 255, 0.77))", boxShadow: '5px 5px 10px 3px grey', textAlign:'center'}}>
+                     background:"linear-gradient(to top, rgba(255, 179, 0, 0.51), rgba(0, 229, 255, 0.48))", boxShadow: '5px 5px 10px 3px grey', textAlign:'center'}}>
                         <CardContent>
                             <img src={Logo} style={{width:80, height:80}}/>
                             <Typography sx={{fontSize:'3.5rem', fontWeight:'bold'}}>{item.data}</Typography>

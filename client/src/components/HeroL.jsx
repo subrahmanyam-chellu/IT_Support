@@ -15,7 +15,7 @@ const HeroL = ({ model }) => {
   }
 
   return (
-    <Box sx={{ width: '100%', heigth:'100%', display: 'flex', flexDirection:'column', justifyContent: 'center', alignItems:'center', backgroundColor: '#e8dcb381', py: { xs: '25px', md: '25px' } }}>
+    <Box sx={{ width: '100%', heigth:'100%', display: 'flex', flexDirection:'column', justifyContent: 'center', alignItems:'center', backgroundColor: '#ffff', py: { xs: '25px', md: '25px' } }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems:'center', mx: {md: '310px' } }}>
         <Box>
           {model && <Typography color='success' sx={{ fontSize: { xs: 14, md: 18 }, textAlign: 'center', animation: `${pulse} 2s infinite` }}>AI model is connected.</Typography>}

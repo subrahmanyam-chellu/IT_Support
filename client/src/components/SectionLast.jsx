@@ -14,7 +14,7 @@ const SectionLast = () => {
   }
 
   return (
-    <Box sx={{ width: '100%', heigth:'100%', display: 'flex', flexDirection:'column', justifyContent: 'center', alignItems:'center', backgroundColor: '#e8dcb381', py: { xs: '75px', md: '25px' } }}>
+    <Box sx={{ width: '100%', heigth:'100%', display: 'flex', flexDirection:'column', justifyContent: 'center', alignItems:'center', backgroundColor: '#e8dcb329', py: { xs: '75px', md: '25px' } }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems:'center', mx: {md: '310px' } }}>
 
         <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, alignItems: 'center', justifyContent: 'space-between', mt: { md: '25px' } }}>

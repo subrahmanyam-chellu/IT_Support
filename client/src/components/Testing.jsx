@@ -46,7 +46,7 @@ const Testing = () => {
     }
 
     return (
-        <Box sx={{ maxWidth: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#e2f8af9f', justifyContent:'center'}} >
+        <Box sx={{ maxWidth: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#887fa51d', justifyContent:'center'}} >
 
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent:'center', maxWidth: '100%', px: { xs: '0px', md: '356px' } }}>
                 <Typography sx={{ fontSize: { xs: 40, md: 65 }, fontWeight: 800, pt: { xs: '30px', md: '50px' } }}>See AI in Action</Typography>

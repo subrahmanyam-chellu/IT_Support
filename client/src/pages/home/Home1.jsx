@@ -64,9 +64,9 @@ export default function ButtonAppBar() {
     return (
         <Box sx={{maxWidth:'100%', height:'100%', display:'flex', flexDirection:'column', alignItems:'center'}}>
             <AppBar sx={{position:'fixed'}}>
-                <Toolbar sx={{maxWidth:'100%', justifyContent:'space-between', backgroundColor:'blanchedalmond', height:{xs:'65px', sm:'75px'}}}>
+                <Toolbar sx={{maxWidth:'100%', justifyContent:'space-between', backgroundColor:'black', height:{xs:'65px', sm:'75px'}}}>
                     <Box>
-                        <Typography sx={{ fontSize: { xs: '20px', md: '40px' }, color: 'black', fontFamily: 'cooper', fontWeight:600}}>AI_Support</Typography>
+                        <Typography sx={{ fontSize: { xs: '20px', md: '40px' }, color: 'white', fontFamily: 'cooper', fontWeight:600}}>AI_Support</Typography>
                     </Box>
                     <Button className="lauchbtn" sx={{
                         width: { xs: '120px', md: '200px' }, height: { xs: '40px', md: '50px' }, fontSize: { xs: 14, md: 'large' },

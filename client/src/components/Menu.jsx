@@ -26,7 +26,7 @@ const Menu = ({section, setSection }) => {
                     my:{xs:'0px', md:'5px'},
                     width: { xs: '97%' },
                     position:{xs:'fixed', sm:'sticky'},
-                    background:{xs:'black', sm:'linear-gradient(45deg, #c3840ecc, #b2be2fb4)'},
+                    background:{xs:'black', sm:'linear-gradient(45deg, #c3840ea8, #b2be2f51)'},
                     zIndex:'2'
                 }}
             >
